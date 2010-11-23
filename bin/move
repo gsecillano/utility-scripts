@@ -1,0 +1,5 @@
+mv  app/models/credential.rb ~/dev/Oxygen/OxygenRails/sap_plugins/user_management/app/models
+mv  test/unit/credential_test.rb ~/dev/Oxygen/OxygenRailsTests/test/unit
+mv  test/fixtures/credentials.yml ~/dev/Oxygen/OxygenRailsTest/test/fixtures 
+mv  db/migrate/20101013222452_create_credentials.rb ~/dev/Oxygen/OxygenRails/sap_plugins/user_management/db/migrate/11_create_credentials.rb
+

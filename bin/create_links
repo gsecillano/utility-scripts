@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+
+cd /opt/boe/bobje/enterprise120/java/services;
+ls -1 ~/cstar/deploy/latest/boeservices | xargs rm -rf;
+ls -1 ~/cstar/deploy/latest/boeservices | awk '{system(sprintf("ln -fs ~/cstar/deploy/latest/boeservices/%s %s\n", $0, $0))}'
+
+for i in 1 2 3
+do 
+  ssh boe@vanpgvmlnx02$i $CMD
+done

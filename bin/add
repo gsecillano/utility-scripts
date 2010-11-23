@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+#
+
+while getopts "c:" flag
+do 
+  echo $flag $OPTARG
+  case "$flag" in
+    c) 
+      changelist="-c $OPTARG"
+      shift
+      shift
+      ;;
+  esac
+done
+
+if [ -z $1 ]
+then
+  while read data
+  do
+    echo $data
+    p4 add -f $changelist `cygpath -am "$data"` 
+  done
+else
+  p4 add -f $changelist `cygpath -am "$1"` 
+fi
+  

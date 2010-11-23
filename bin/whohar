@@ -1,0 +1,11 @@
+#
+
+if [ $# = 0 ]; then
+  cd /
+else
+  pushd . > /dev/null
+  cd $WHOHAR_HOME
+  script/$*
+#  popd > /dev/null
+fi
+

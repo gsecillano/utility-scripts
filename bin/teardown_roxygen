@@ -1,0 +1,6 @@
+#!/bin/bash
+
+linkd OxygenRails /D
+linkd app /D
+linkd config /D
+linkd db /D

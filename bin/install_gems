@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+
+cat ~/gem_list | awk '{system(sprintf("jruby -S gem install %s --no-rdoc --no-ri --include-dependencies\n", $0))}'
+

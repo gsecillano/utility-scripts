@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+#
+
+SEARCH_DIR=${1:-.}
+
+echo "Searching $SEARCH_DIR"
+
+ARG_LEN = 200
+
+find -type f | xargs cygpath -am | \
+  awk -v arglen=$ARG_LEN '{
+    files = sprintf("%s %s", files, $1)
+    if (NR % arglen == 0) {
+      system(sprintf("p4 fstat %s", files))
+      files = ""
+    }
+  } END {
+    system(sprintf("p4 fstat %s", files))
+  }' | grep 'no such file'

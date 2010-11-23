@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+
+ssh -R *:8080:perforceserver1.rd.crystald.net:1971 Administrator@10.101.48.243 'p4 -c gsecil-WHOHAR1 -p localhost:8080 -u gsecillano -P geliks0. sync'
+

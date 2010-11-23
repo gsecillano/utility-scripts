@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+#
+#
+
+ssh -L 443:vpn.ood.opsource.net:443 bobj@odproxy -N > /dev/null 2>&1 &

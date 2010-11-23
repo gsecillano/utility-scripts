@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+cp $1 $JBOSS_HOME/server/default/deploy

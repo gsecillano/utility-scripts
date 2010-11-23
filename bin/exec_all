@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+#
+
+PCTR=0
+for PARAM in $*
+do
+  if [ $PCTR -eq 0 ]
+  then
+    USER=$PARAM
+  else
+    CMD="$CMD $PARAM"
+  fi
+  PCTR=$((PCTR+1))
+done
+
+ctr=1; 
+while [ $((ctr)) -lt 17 ]; do 
+  echo $ctr; 
+  ssh $USER@prod$ctr $CMD ; 
+  ctr=$((ctr+1)); 
+  if [ $((ctr)) -eq 7 ]
+  then
+    ctr=10
+  fi
+done

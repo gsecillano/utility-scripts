@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+#
+
+for f in "$@" 
+do
+  files="$files `cygpath -am`"
+done
+
+p4 diff $files

@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+
+VIM="/c/Program Files/Vim/vim73/gvim"
+HOME="/d/Documents and Settings/gsecillano"
+
+if [ ! -z "$1" ]
+then
+    filepath=`cygpath -am $1`
+fi
+
+"$VIM" $filepath &

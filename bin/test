@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+
+while getopts "c:" flag
+do
+  echo "$flag" $OPTARG
+done

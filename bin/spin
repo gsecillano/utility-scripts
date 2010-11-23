@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+jruby script/server >/dev/null 2>/dev/null &
+jruby script/server -p 3001 >/dev/null 2>/dev/null &
+tail -f log/development.log
+

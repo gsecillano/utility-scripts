@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+#
+
+rxvt -geometry 120x30 -bg black -fg gray -fn 12x14 -e /bin/bash -l &

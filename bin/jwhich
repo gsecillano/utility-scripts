@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+#
+
+java -cp `cygpath -m ~/lib/jwhich.jar` -Djava.ext.dirs="`cygpath -am $1`" JWhich $2

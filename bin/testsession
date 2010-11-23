@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+#
+
+HOST=thewhohar
+URI=https://thewhohar/xcelsius_templates/soap_chart_data/-2JTQ_D1g1_dNmqw69vJ3N/559
+SOAP_REQ=/tmp/soap1.req
+curl -k -c /tmp/cookies -d "user[user_id]=dev@sap.com&user[password]=abc123" https://$HOST/session/create
+while true; do
+  curl -k -b /tmp/cookies -d @$SOAP_REQ -H "SOAPAction: /datasets/data/GetDataTable;Content-type: text/xml" $URI
+  date
+  echo 'Sleeping for 2 minutes...'
+  sleep 120
+done

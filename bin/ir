@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+#
+
+JRUBY_HOME=~/dev/Oxygen/jruby-1.5.1
+
+$JRUBY_HOME/bin/jruby -I`cygpath -am ~/ruby7` -r init.rb -S jirb_swing --simple-prompt > /dev/null 2>&1 &

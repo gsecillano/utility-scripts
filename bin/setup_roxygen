@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ROXYGEN_ROOT=`cygpath -am /d/projects/dev/river_oxygen_integration`
+
+function link() {
+  PREFIX=$2
+  linkd $1 $ROXYGEN_ROOT/$2$1
+}
+
+rm -rf OxygenRails app config db 
+link OxygenRails 
+link app roxygen/
+link config roxygen/
+link db roxygen/

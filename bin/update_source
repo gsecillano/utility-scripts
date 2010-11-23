@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+
+LOGFILE=/d/whohar_deployment/deployment/logs/sync.`date +%Y%m%d-%H%M`.log
+if touch $LOGFILE > /dev/null 2>/dev/null; then
+  LOG=true
+fi
+
+P4CLIENT=production-whohar1
+P4USER=gsecillano
+P4PASSWD=geliks0.
+P4PORT=localhost:8080
+
+p4 -c $P4CLIENT -u $P4USER -P $P4PASSWD -p $P4PORT sync $1 | awk '{ print $0; if ($LOG ~ "true") printf $0 >> $LOGFILE; }'
