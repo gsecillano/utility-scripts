@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Parameter: changelist to integrate
+#
+
+#P4CLIENT=gsecil-constellation-private-beta
+#BRANCH_SPEC=Whohar_v6^Whohar_v7
+#BRANCH_SPEC="Constellation_v7^Constellation_v7_private_beta -r"
+#BRANCH_SPEC="Whohar_v7^Whohar_v7_ondemand_stable"
+#BRANCH_SPEC="Whohar_v7_ondemand^Whohar_v7_ondemand_stable -r"
+BRANCH_SPEC=${BRANCH_SPEC:-"Constellation_v8^Constellation_v8_cstar_stable -r"}
+#BRANCH_SPEC="Constellation_v7_cstar_stable^Constellation_v7_cstar_production -r"
+
+
+echo "Getting description for change $1"
+p4 describe -s $1 | grep -P \\t | sed -e 's/"/\\"/g' > /tmp/p4note.txt
+
+echo "Creating new changelist..."
+CDESC=""
+CDESC="Change: new
+Description:
+	Summary: Integrate change $1 using $BRANCH_SPEC 
+
+`cat /tmp/p4note.txt`" 
+CHANGE_LIST=`printf "$CDESC" | p4 change -i | cut --delimiter=' ' --fields=2`
+
+printf "Changelist %s created.\n\n" $CHANGE_LIST
+
+echo "Integrating changelist $1"
+p4 integrate -d -o -c $CHANGE_LIST -b $BRANCH_SPEC //...@$1,@$1
+
+printf "\n\nAutoresolving...\n"
+p4 resolve -am | grep --color 'resolve skipped'
+
+printf "\n\nSubmitting...\n"
+p4 submit -c $CHANGE_LIST
