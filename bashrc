@@ -1,17 +1,27 @@
 export TMP=/tmp
 export TEMP=/tmp
 export ZFP_HOME=/c/workspace/zfp_stable
-export JRUBY_HOME=/d/projects/v8_mainline/Oxygen/jruby-1.5.1
+#export JRUBY_HOME=/c/projects/integration/v8_cstar_stable/Oxygen/jruby-1.4.0
+#export JRUBY_HOME=/c/projects/integration/v8/Oxygen/jruby-1.5.1
+export JRUBY_HOME=/c/projects/oxygen-user-management/v8/Oxygen/jruby-1.5.1
+echo JRUBY_HOME=/c/projects/oxygen-user-management/v8/Oxygen/jruby-1.5.1
+#export JRUBY_HOME=/c/projects/integration/v8_cstar_stable/Oxygen/jruby-1.5.1
+#export JRUBY_HOME=/d/projects/v8_mainline/Oxygen/jruby-1.5.1
 export WHOHAR_HOME=`cygpath -am ~/dev/constellation/whohar`
 
-export PATH=$PATH:$ANT_HOME/bin:~/bin:$JRUBY_HOME/bin:/c/Program\ Files/Business\ Objects/BusinessObjects\ Enterprise\ 12.0/win32_x86:/c/Program\ Files/MySQL/MySQL\ Server\ 5.1/bin
+export PATH=$PATH:/usr/sbin:$ANT_HOME/bin:~/bin:$JRUBY_HOME/bin:
+export JAVA_HOME=`cygpath -m $JAVA_HOME`
 
 #export P4CLIENT=gsecil-constellation-v8
-export P4CLIENT=gsecil-dev-v8
-export P4PORT=perforceserver1:1971
+#export P4CLIENT=gsecil-dev-v8
+#export P4CLIENT=gsecil-whohar-int
+export P4CLIENT=gsecil-oxygen-user-management
+echo "P4CLIENT=gsecil-oxygen-user-management"
+export P4PORT=vanpgpf05.pgdev.sap.corp:1971
 export P4USER=gsecillano
+export P4EDITOR="c:/cygwin/usr/local/bin/vim.exe -g -f"
 
-export http_proxy=http://bluecoat-proxy:8080
+export http_proxy=http://proxy:8080
 export https_proxy=$http_proxy
 export GIT_SSL_NO_VERIFY=true
 

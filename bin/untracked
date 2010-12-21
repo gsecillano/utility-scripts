@@ -6,7 +6,7 @@ SEARCH_DIR=${1:-.}
 
 echo "Searching $SEARCH_DIR"
 
-ARG_LEN = 200
+ARG_LEN=200
 
 find -type f | xargs cygpath -am | \
   awk -v arglen=$ARG_LEN '{
