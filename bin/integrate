@@ -8,9 +8,38 @@
 #BRANCH_SPEC="Constellation_v7^Constellation_v7_private_beta -r"
 #BRANCH_SPEC="Whohar_v7^Whohar_v7_ondemand_stable"
 #BRANCH_SPEC="Whohar_v7_ondemand^Whohar_v7_ondemand_stable -r"
-BRANCH_SPEC=${BRANCH_SPEC:-"Constellation_v8^Constellation_v8_cstar_stable -r"}
+#BRANCH_SPEC=${BRANCH_SPEC:-"Constellation_v8^Constellation_v8_cstar_stable -r"}
 #BRANCH_SPEC="Constellation_v7_cstar_stable^Constellation_v7_cstar_production -r"
 
+while getopts "b:" flag
+do 
+  echo $flag $OPTARG
+  case "$flag" in
+    td) 
+      BRANCH_SPEC="Constellation_v8^Constellation_v8_cstar_sprint_stable -r"
+      shift
+      shift
+      ;;
+    sd) 
+      BRANCH_SPEC="Constellation_v8^Constellation_v8_cstar_stable -r"
+      shift
+      shift
+      ;;
+    ps) 
+      BRANCH_SPEC="Constellation_v8_cstar_stable^Constellation_v8_cstar_production -r"
+      shift
+      shift
+      ;;
+    *)
+      if [ -z "$BRANCH_SPEC" ]
+        echo "Specify -b (td|sd|ps) or the BRANCH_SPEC environment variable"
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+echo "Integrating change $1 using $BRANCH_SPEC"
 
 echo "Getting description for change $1"
 p4 describe -s $1 | grep -P \\t | sed -e 's/"/\\"/g' > /tmp/p4note.txt

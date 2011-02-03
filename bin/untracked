@@ -8,7 +8,7 @@ echo "Searching $SEARCH_DIR"
 
 ARG_LEN=200
 
-find -type f | xargs cygpath -am | \
+find -type f | \
   awk -v arglen=$ARG_LEN '{
     files = sprintf("%s %s", files, $1)
     if (NR % arglen == 0) {

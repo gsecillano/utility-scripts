@@ -19,9 +19,9 @@ then
   while read data
   do
     echo $data
-    p4 add -f $changelist `cygpath -am "$data"` 
+    p4 add -f $changelist "$data"
   done
 else
-  p4 add -f $changelist `cygpath -am "$1"` 
+  p4 add -f $changelist "$1"
 fi
   

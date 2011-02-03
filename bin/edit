@@ -18,9 +18,9 @@ done
 if [ -z $1 ]
 then
   while read data; do
-    p4 edit $changelist -f `cygpath -am "$data"`
+    p4 edit $changelist -f "$data"
   done
 else
-  p4 edit $changelist -f `cygpath -am "$1"`
+  p4 edit $changelist -f "$1"
 fi
   

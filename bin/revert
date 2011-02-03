@@ -5,9 +5,9 @@
 if [ -z $1 ]
 then
   while read data; do
-    p4 revert `cygpath -am "$data"`
+    p4 revert "$data"
   done
 else
-  p4 revert `cygpath -am "$1"`
+  p4 revert "$1"
 fi
   
