@@ -13,8 +13,7 @@
 
 while getopts "b:" flag
 do 
-  echo $flag $OPTARG
-  case "$flag" in
+  case "$OPTARG" in
     td) 
       BRANCH_SPEC="Constellation_v8^Constellation_v8_cstar_sprint_stable -r"
       shift
@@ -32,6 +31,7 @@ do
       ;;
     *)
       if [ -z "$BRANCH_SPEC" ]
+      then
         echo "Specify -b (td|sd|ps) or the BRANCH_SPEC environment variable"
         exit 1
       fi
