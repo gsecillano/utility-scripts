@@ -30,14 +30,15 @@ do
       shift
       ;;
     *)
-      if [ -z "$BRANCH_SPEC" ]
-      then
-        echo "Specify -b (td|sd|ps) or the BRANCH_SPEC environment variable"
-        exit 1
-      fi
       ;;
   esac
 done
+
+if [ -z "$BRANCH_SPEC" ]
+then
+  echo "Specify -b (td|sd|ps) or the BRANCH_SPEC environment variable"
+  exit 1
+fi
 
 echo "Integrating change $1 using $BRANCH_SPEC"
 

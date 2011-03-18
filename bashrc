@@ -36,5 +36,5 @@ alias server='cd $WHOHAR_HOME;jruby -J-Djruby.native.enabled=false script/server
 alias cy='cygpath -a -m'
 alias startxwin='startxwin > /dev/null 2>&1'
 alias pbe='cd ~/dev/constellation/whohar; PBE_AGENT_QUEUE=1 PBE_SERVER_QUEUE=1 PBE_IPAPER_QUEUE=1 PBE_SEARCH_QUEUE=1 PBE_TERM_EXTRACTION_QUEUE=1 PBE_SEARCH_INDEX_QUEUE=1 PBE_EXPORT_QUEUE=1 PBE_EXPLORER_QUEUE=1 jruby script/runner "Cstar::pbe_server" > /tmp/pbe.log 2>&1'
-alias T='jruby -J-Xmx768m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner test/all_tests.rb -v --runner=fastfail'
-
+alias T='jruby -J-Xmx1300m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner test/all_tests.rb -v --runner=fastfail'
+alias ls='ls --color'
