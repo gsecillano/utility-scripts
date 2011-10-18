@@ -20,7 +20,6 @@ export https_proxy=$http_proxy
 export GIT_SSL_NO_VERIFY=true
 
 #alias t='tail -f $PWD/log/development.log'
-alias vi=gvim
 alias irb=~/bin/irb
 alias rake='jruby -S rake'
 alias gem='jruby -S gem'
