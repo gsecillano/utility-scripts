@@ -1,0 +1,19 @@
+<background>
+  <starttime>
+    <year>2009</year>
+    <month>08</month>
+    <day>04</day>
+    <hour>00</hour>
+    <minute>00</minute>
+    <second>00</second>
+  </starttime>
+<!-- This animation will start at midnight. -->
+  <static>
+    <duration>300.0</duration>
+    <file>/home/george/Pictures/backgrounds/katkam/katkam.jpg</file>
+  </static>
+  <static>
+    <duration>300.0</duration>
+    <file>/home/george/Pictures/backgrounds/flickr/flickr_image</file>
+  </static>
+</background>
