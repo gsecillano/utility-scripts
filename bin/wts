@@ -4,4 +4,4 @@
 
 DISPLAY=:0.2
 
-/usr/lib/ICAClient/wfica ~/Downloads/launch.ica &
+/usr/lib/ICAClient/wfica -geom 1024x768 ~/Downloads/launch.ica &
