@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Perforce
+Comment=Perforce
+TryExec=/opt/p4v-2010.1.276058/bin/p4v
+Exec=/opt/p4v-2010.1.276058/bin/p4v
+Icon=/opt/p4v-2010.1.276058/lib/p4v/P4VResources/icons/p4v_48_high.png

@@ -1,0 +1,72 @@
+#!/bin/bash
+#
+
+usage() {
+  cat - <<EOF
+Usage:
+  server [-h|-f]
+Parameters:
+  -h: show this message
+  -f: kill any previously running server process
+EOF
+}
+
+PIDFILE=/var/tmp/server.pid
+
+while getopts "hf" flag 
+do
+  case $flag in
+    h)
+      usage
+      exit 0
+      ;;
+    f)
+      FORCE=true
+      ;;
+  esac
+done
+
+if [ ! -z "$FORCE" ] && [ -f $PIDFILE ]
+then
+  PID=$(cat $PIDFILE)
+  echo Killing process with PID: $PID
+  kill $PID > /dev/null 2>&1
+  COUNT=0
+  while true
+  do
+    sleep 1
+    ps -e | grep $PID > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+      break
+    fi
+    echo -n .
+    COUNT=$(($COUNT+1))
+    if [ $COUNT -eq 15 ]
+    then
+      echo 
+      echo Sending SIGKILL to process with PID: $PID
+      kill -KILL $PID
+      break
+    fi
+  done
+fi
+
+NAME=$(basename $(dirname $(readlink -f .)))
+
+echo Running server
+jruby -J-Xmx1300m -J-XX:MaxPermSize=512m script/server > /tmp/$NAME.log 2>&1 &
+PID=$!
+sleep 0.5
+# Find child processes 
+ps -o pid --no-headers --ppid $PID > $PIDFILE
+if [ $? -ne 0 ]
+then
+  # If no child processes use the main PID
+  echo $PID > $PIDFILE
+fi
+
+
+echo Tailing log file
+tail -f /tmp/$NAME.log
+

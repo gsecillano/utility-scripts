@@ -1,0 +1,16 @@
+
+[Added Associations]
+x-scheme-handler/http=google-chrome.desktop;
+x-scheme-handler/mailto=thunderbird.desktop;
+text/calendar=gedit.desktop;
+audio/x-vorbis+ogg=banshee.desktop;
+video/x-ogm+ogg=totem.desktop;
+image/jpeg=eog.desktop;
+
+[Default Applications]
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+x-scheme-handler/mailto=thunderbird.desktop

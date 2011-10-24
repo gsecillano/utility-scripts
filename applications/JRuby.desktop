@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JRuby
+Comment=JRuby
+TryExec=/home/george/bin/jruby
+Exec=/home/george/bin/jruby -I /home/george/ruby -rinit -S jirb_swing --simple-prompt
+Icon=/home/george/Pictures/jruby.png

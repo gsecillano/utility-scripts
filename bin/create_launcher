@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+usage() {
+cat - <<EOF
+Usage:
+  create_launcher [-n NAME] [-p PATH] [-i ICONPATH]
+Where
+  NAME - name of the app
+  PATH - path to the executable
+  ICONPATH - path to the icon image
+EOF
+}
+
+while getopts "i:p:n:" flag
+do 
+  case "$flag" in
+    i) 
+      ICONPATH=$OPTARG
+      ;;
+    p) 
+      BINPATH=$OPTARG
+      ;;
+    n) 
+      NAME=$OPTARG
+      ;;
+  esac
+done
+
+if [ -z $NAME ] || [ -z $BINPATH ] 
+then
+  usage
+  exit 1
+fi
+
+if [ ! -e $BINPATH ] 
+then
+  echo "$BINPATH is not executable"
+  exit 1
+fi
+
+if [ ! -f $ICONPATH ] 
+then
+  echo "$ICONPATH does not exist"
+  exit 1
+fi
+
+cat - > ~/.local/share/applications/$NAME.desktop <<EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=$NAME
+Comment=$NAME
+TryExec=$BINPATH
+Exec=$BINPATH
+Icon=$ICONPATH
+EOF
+
+exit 0
