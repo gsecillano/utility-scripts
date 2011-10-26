@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+#
+
+while getopts "d:" flag 
+do
+  case $flag in
+    d)
+      DIR=$OPTARG
+      shift
+      shift
+      ;;
+  esac
+done
+
+DIR=${DIR:-.}
+PATTERN=$1
+echo Find pattern: $PATTERN
+for jar in $(find $DIR -name '*.jar')
+do
+  echo $jar
+  jar tf $jar | grep --color $PATTERN
+done
+

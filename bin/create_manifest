@@ -1,0 +1,123 @@
+#!/bin/bash
+#
+
+usage() {
+  cat - <<EOF
+  Usage:
+    create_manifest -d <directory>
+  Where
+    directory - project directory
+EOF
+}
+
+DIR=
+FORCE=
+while getopts "d:f" flag 
+do
+  case $flag in
+    d)
+      DIR=$OPTARG
+      ;;
+    f)
+      FORCE=true
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$DIR" ]
+then
+  usage
+  exit 1;
+fi
+
+MF=META-INF/MANIFEST.MF
+if [ -f $MF ] 
+then
+  echo $(readlink -f $MF) already exists.
+  if [ ! -z "$FORCE" ]
+  then
+    echo Backing up $(readlink -f $MF)
+    echo Recreating manifest
+    cp $MF $MF.bak
+    chmod +w $MF.bak
+  else
+    exit 1
+  fi
+fi
+
+NAME=$(basename $(readlink -f $DIR))
+pushd $DIR > /dev/null 2>&1
+mkdir -p META-INF
+cat - > $MF <<EOF
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: $NAME
+Bundle-SymbolicName: $NAME
+Bundle-Version: 1.0.0
+EOF
+
+AWK='
+{
+  if (NR > 1) {
+    str = sprintf("%s,\n %s", str, $0)
+  } else {
+    str = $0
+  }
+}
+END {
+  print str
+}
+'  
+if [ -d src ]
+then
+  # Set up export package
+  echo
+fi
+
+
+BUNDLECLASSPATH=$(printf "Bundle-ClassPath: .,bin")
+BUNDLELIBCLASSES=
+if [ -d lib ]
+then
+  # Append to bundle classpath
+  JARS=$(find lib -name '*.jar')
+  if [ $? -eq 0 ]
+  then
+    BUNDLECLASSPATH=$(printf "$BUNDLECLASSPATH\n$JARS")
+  fi
+  for jar in $JARS
+  do
+    BUNDLELIBCLASSES="$(printf "$BUNDLELIBCLASSES\n")$(jar tf $jar | sed 's#/#.#g')"
+  done
+fi
+
+printf "$BUNDLECLASSPATH" | awk "$AWK" >> $MF
+
+EXPORTPACKAGES=
+IMPORTPACKAGES=
+
+find src -name '*.java' > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+  EXPORTPACKAGES="$(find src -name '*.java' -exec grep 'package ' {} \; | sed -e 's#src/##g' -e 's#^package ##g' -e 's/;//g' | sort | uniq)" 
+  IMPORTS="$(find src -name '*.java' -exec grep 'import ' {} \; | grep -v "java." | sed -e 's#src/##g' -e 's#^import ##g' -e 's/;//g' | sort | uniq)" 
+  for class in $IMPORTS
+  do
+    echo $BUNDLELIBCLASSES | grep --color -o $class >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+      IMPORTPACKAGES="$(printf "%s\n%s\n" $IMPORTPACKAGES "$(echo $class | sed 's/\.[A-Z].*//g')")"
+    fi
+  done
+fi
+
+printf "Import-Package: %s\n" "$IMPORTPACKAGES" | awk "$AWK" >> $MF
+printf "Export-Package: %s\n" "$EXPORTPACKAGES" | awk "$AWK" >> $MF
+
+
+
+

@@ -4,7 +4,7 @@
 usage() {
   cat - <<EOF
 Usage:
-  server [-h|-f]
+  server [-h|-f|-J<jvm setting>]
 Parameters:
   -h: show this message
   -f: kill any previously running server process
@@ -13,7 +13,7 @@ EOF
 
 PIDFILE=/var/tmp/server.pid
 
-while getopts "hf" flag 
+while getopts "hfJ:" flag 
 do
   case $flag in
     h)
@@ -22,6 +22,9 @@ do
       ;;
     f)
       FORCE=true
+      ;;
+    J)
+      JVMOPTS="$JVMOPTS -J$OPTARG"
       ;;
   esac
 done
@@ -55,7 +58,7 @@ fi
 NAME=$(basename $(dirname $(readlink -f .)))
 
 echo Running server
-jruby -J-Xmx1300m -J-XX:MaxPermSize=512m script/server > /tmp/$NAME.log 2>&1 &
+jruby -J-Xmx1300m -J-XX:MaxPermSize=512m $JVMOPTS script/server > /tmp/$NAME.log 2>&1 &
 PID=$!
 sleep 0.5
 # Find child processes 
