@@ -115,7 +115,7 @@ then
   done
 fi
 
-printf "Import-Package: %s\n" "$IMPORTPACKAGES" | awk "$AWK" >> $MF
+printf "Import-Package: %s\n" "$IMPORTPACKAGES" |sort|uniq| awk "$AWK" >> $MF
 printf "Export-Package: %s\n" "$EXPORTPACKAGES" | awk "$AWK" >> $MF
 
 
