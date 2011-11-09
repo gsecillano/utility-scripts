@@ -3,5 +3,5 @@
 #
 
 DISPLAY=${DISPLAY:-:0.0}
-
-/usr/lib/ICAClient/wfica ~/Downloads/launch.ica &
+DIR=$(dirname $0)
+/usr/lib/ICAClient/wfica $DIR/launch.ica &

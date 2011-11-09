@@ -5,8 +5,10 @@ export P4BASE=$HOME/Perforce
 export DEVBASE=$HOME/dev
 export JRUBY_HOME=$DEVBASE/Oxygen/jruby-1.6.2
 export WHOHAR_HOME=$DEVBASE/constellation/whohar
+export M2_HOME=$DEVBASE/Oxygen/build-tools/apache-maven-3.0.3
+export ANT_HOME=$DEVBASE/Oxygen/build-tools/apache-ant-1.7.1
 
-export PATH=$PATH:/usr/sbin:$ANT_HOME/bin:~/bin:$JRUBY_HOME/bin:/opt/p4v-2010.1.276058/bin
+export PATH=$PATH:/usr/sbin:$ANT_HOME/bin:$M2_HOME/bin:~/bin:$JRUBY_HOME/bin:/opt/p4v-2010.1.276058/bin
 
 export RUBY_SCRIPT_PATH=~/ruby
 export P4CLIENT=gsecil-linux-main
