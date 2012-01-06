@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+#
+
+#jruby -J-Xdebug -J-Xrunjdwp:transport=dt_socket,address=7777,server=y,suspend=y -J-Xmx1300m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner "$@" -v --runner=fastfail
+jruby -J-Xmx1300m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner "$@" -v --runner=fastfail

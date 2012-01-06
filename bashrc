@@ -13,9 +13,9 @@ export PATH=$PATH:/usr/sbin:$ANT_HOME/bin:$M2_HOME/bin:~/bin:$JRUBY_HOME/bin:/op
 export RUBY_SCRIPT_PATH=~/ruby
 export P4CLIENT=gsecil-linux-main
 export P4PORT=vanpgpf05.pgdev.sap.corp:1971
-export P4USER=gsecillano
+export P4USER=i819885
 export P4EDITOR="gvim -f"
-export P4DONTCHECKIN=${P4DONTCHECKIN:-$(p4 changes -u gsecillano -s pending -c gsecil-linux-main | grep DO-NOT-CHECK-IN | cut -d' ' -f 2)}
+export P4DONTCHECKIN=${P4DONTCHECKIN:-$(p4 changes -u i819885 -s pending -c gsecil-linux-main | grep DO-NOT-CHECK-IN | cut -d' ' -f 2)}
 
 export http_proxy=http://proxy:8080
 export https_proxy=$http_proxy

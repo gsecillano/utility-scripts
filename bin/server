@@ -69,7 +69,7 @@ then
   echo $PID > $PIDFILE
 fi
 
-
-echo Tailing log file
-tail -f /tmp/$NAME.log
+LOGFILE=/tmp/$NAME.log
+echo Tailing log file: $LOGFILE
+tail -f $LOGFILE
 

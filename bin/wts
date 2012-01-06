@@ -2,6 +2,6 @@
 #
 #
 
-DISPLAY=${DISPLAY:-:0.0}
+DISPLAY=:0.0
 DIR=$(dirname $0)
 /usr/lib/ICAClient/wfica $DIR/launch.ica &

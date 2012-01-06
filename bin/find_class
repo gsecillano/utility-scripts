@@ -18,7 +18,13 @@ PATTERN=$1
 echo Find pattern: $PATTERN
 for jar in $(find $DIR -name '*.jar')
 do
-  echo $jar
-  jar tf $jar | grep --color $PATTERN
+  result="$(jar tf $jar | grep --color $PATTERN)"
+  if [ $? -eq 0 ] 
+  then
+    echo $jar
+    printf "$result"
+    echo
+    echo
+  fi
 done
 

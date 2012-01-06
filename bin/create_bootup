@@ -1,0 +1,140 @@
+#!/bin/sh
+#
+#
+
+usage() {
+  cat - <<USAGE
+Usage:
+  create_bootup [ -e executable ] [ -a arguments ] [ -c configfile ]
+where
+  executable - executable binary (basename of absolute path)
+  arguments - the executable's command arguments
+  configfile - file containing configuration for e service
+USAGE
+exit 0
+}
+
+while getopts "e:a:c:" flag
+do
+  case $flag in
+    e)
+      EXECUTABLE=$OPTARG
+      ;;
+    a)
+      ARGUMENTS="$OPTARG"
+      ;;
+    c)
+      CONFIG=$OPTARG
+      ;;
+    *)
+      usage && exit 1
+
+esac
+done
+
+test -z "$EXECUTABLE" && usage && exit 1 
+
+BASENAME=$(basename $EXECUTABLE)
+INIT_SCRIPT=/etc/init.d/$BASENAME 
+cat - > $INIT_SCRIPT <<SCRIPT
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          $BASENAME
+# Required-Start:    \$network
+# Required-Stop:
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: $BASENAME daemon
+# Description:       $BASENAME daemon
+### END INIT INFO
+
+EXEC_BIN=$EXECUTABLE
+test -x \$EXEC_BIN || { echo "\$EXEC_BIN not installed";
+        if [ "\$1" = "stop" ]; then exit 0;
+        else exit 5; fi; }
+
+# Check for existence of needed config file and read it
+EXEC_CONFIG=$CONFIG
+test -z "\$EXEC_CONFIG" || test -r \$EXEC_CONFIG || { echo "\$EXEC_CONFIG not existing";
+        if [ "\$1" = "stop" ]; then exit 0;
+        else exit 6; fi; }
+test -z "\$EXEC_CONFIG" || source \$EXEC_CONFIG
+
+# Load the rc.status script for this service.
+. /etc/rc.status
+
+# Reset status of this service
+rc_reset
+
+case "\$1" in
+    start)
+        echo -n "Starting $BASENAME "
+        ## Start daemon with startproc(8). If this fails
+        ## the return value is set appropriately by startproc.
+        startproc -l /var/log/$BASENAME.log \$EXEC_BIN $ARGUMENTS
+
+        # Remember status and be verbose
+        rc_status -v
+        ;;
+    stop)
+        echo -n "Shutting down $BASENAME "
+        ## Stop daemon with killproc(8) and if this fails
+        ## killproc sets the return value according to LSB.
+
+        killproc -TERM \$EXEC_BIN
+
+        # Remember status and be verbose
+        rc_status -v
+        ;;
+    restart)
+        ## Stop the service and regardless of whether it was
+        ## running or not, start it again.
+        \$0 stop
+        \$0 start
+
+        # Remember status and be quiet
+        rc_status
+        ;;
+    reload)
+        # If it supports signaling:
+        echo -n "Reload service $BASENAME "
+        killproc -HUP \$EXEC_BIN
+        #touch /var/run/BAR.pid
+        rc_status -v
+
+        ## Otherwise if it does not support reload:
+        #rc_failed 3
+        #rc_status -v
+        ;;
+    status)
+        echo -n "Checking for service $BASENAME "
+        ## Check status with checkproc(8), if process is running
+        ## checkproc will return with exit status 0.
+
+        # Return value is slightly different for the status command:
+        # 0 - service up and running
+        # 1 - service dead, but /var/run/  pid  file exists
+        # 2 - service dead, but /var/lock/ lock file exists
+        # 3 - service not running (unused)
+        # 4 - service status unknown :-(
+        # 5--199 reserved (5--99 LSB, 100--149 distro, 150--199 appl.)
+
+        # NOTE: checkproc returns LSB compliant status values.
+        checkproc \$EXEC_BIN
+        # NOTE: rc_status knows that we called this init script with
+        # "status" option and adapts its messages accordingly.
+        rc_status -v
+        ;;
+    *)
+        ## If no parameters are given, print which are avaiable.
+        echo "Usage: \$0 {start|stop|status|restart|reload}"
+        exit 1
+        ;;
+esac
+
+rc_exit
+SCRIPT
+
+chmod 744 $INIT_SCRIPT
+ln -fs $INIT_SCRIPT /sbin/rc$BASENAME
