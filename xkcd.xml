@@ -5,16 +5,16 @@
     <day>04</day>
     <hour>00</hour>
     <minute>00</minute>
-    <second>30</second>
+    <second>15</second>
   </starttime>
 <!-- This animation will start at midnight. -->
   <static>
     <duration>90.0</duration>
     <!--<file>/home/george/Pictures/backgrounds/katkam/katkam.jpg</file>-->
-    <file>/home/george/Pictures/backgrounds/flickr/flickr_image0</file>
+    <file>/home/george/Pictures/backgrounds/xkcd/xkcd_image</file>
   </static>
   <static>
     <duration>90.0</duration>
-    <file>/home/george/Pictures/backgrounds/flickr/flickr_image1</file>
+    <file>/home/george/Pictures/backgrounds/xkcd/xkcd_image</file>
   </static>
 </background>
