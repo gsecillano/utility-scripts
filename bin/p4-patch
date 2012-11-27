@@ -1,0 +1,5 @@
+<<5
+cat /tmp/p4-diff.txt | sed -e 's#^==== ##' -e 's# ====0#' | sed 's#.*jam_svn/ct/\(.*\)#diff --cc a/\1 b/\1\n--- a/\1\n+++ b/\1#' > /tmp/patch-from-p4.txt 
+5
+
+cat /tmp/p4-files-to-merge.txt | xargs -I{} p4 diff -dub {}#1

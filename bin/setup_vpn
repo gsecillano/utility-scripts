@@ -1,0 +1,32 @@
+#!/bin/bash -x
+#
+# Setup VPN client gateway connections
+#
+
+
+ssh gateway 'kill $(pgrep -f fifo500)'
+ssh gateway 'kill $(pgrep -f fifo4500)'
+ssh gateway 'kill $(pgrep -f fifo10000)'
+
+# Set up remote
+ssh gateway '[ -f /tmp/fifo500 ] && mkfifo /tmp/fifo500'
+ssh gateway '[ -f /tmp/fifo4500 ] && mkfifo /tmp/fifo4500'
+ssh gateway '[ -f /tmp/fifo10000 ] && mkfifo /tmp/fifo10000'
+
+ssh -L 6667:localhost:6667 gateway nc -l 6667 \< /tmp/fifo500 \| nc -u 12.178.105.138 500 \> /tmp/fifo500 & 
+ssh -L 6668:localhost:6668 gateway nc -l 6668 \< /tmp/fifo4500 \| nc -u 12.178.105.138 4500 \> /tmp/fifo4500 & 
+ssh -L 6669:localhost:6669 gateway nc -l 6669 \< /tmp/fifo10000 \| nc -u 12.178.105.138 10000 \> /tmp/fifo10000 & 
+
+
+kill $(pgrep -f fifo500)
+kill $(pgrep -f fifo4500)
+kill $(pgrep -f fifo10000)
+
+# Set up local
+[ -f /tmp/fifo500 ] && mkfifo /tmp/fifo500
+[ -f /tmp/fifo4500 ] && mkfifo /tmp/fifo4500
+[ -f /tmp/fifo10000 ] && mkfifo /tmp/fifo10000
+
+sudo nc -l -u 500 <  /tmp/fifo500 | nc localhost 6667 > /tmp/fifo500 & 
+sudo nc -l -u 4500 <  /tmp/fifo4500 | nc localhost 6668 > /tmp/fifo4500 & 
+sudo nc -l -u 10000 <  /tmp/fifo10000 | nc localhost 6669 > /tmp/fifo10000 & 

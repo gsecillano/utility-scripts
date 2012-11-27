@@ -1,0 +1,93 @@
+*** /home/george/bin/launch.ica	2012-02-16 15:38:16.000000000 -0800
+--- /home/george/Downloads/launch (3).ica	2012-02-16 15:35:05.000000000 -0800
+***************
+*** 32,38 ****
+  ProxyTimeout=30000
+  ProxyType=Auto
+  ProxyUseFQDN=Off
+! RemoveICAFile=no
+  SSOnUserSetting=On
+  TransparentKeyPassthrough=FullScreenOnly
+  TransportReconnectEnabled=On
+--- 32,38 ----
+  ProxyTimeout=30000
+  ProxyType=Auto
+  ProxyUseFQDN=Off
+! RemoveICAFile=yes
+  SSOnUserSetting=On
+  TransparentKeyPassthrough=FullScreenOnly
+  TransportReconnectEnabled=On
+***************
+*** 44,79 ****
+  SAP Desktop=
+  
+  [SAP Desktop]
+- #Address=10.4.32.72:1494
+  Address=10.4.32.68:1494
+  AutologonAllowed=ON
+  BrowserProtocol=HTTPonTCP
+  CGPAddress=
+! ClearPassword=7DE4D62A25D6C1
+  ClientAudio=On
+  DesiredColor=8
+  DoNotUseDefaultCSL=On
+! Domain=\2F422E658E16EA1E
+  EnableSSOnThruICAFile=On
+  FontSmoothingType=1
+  InitialProgram=#SAP Desktop
+  LPWD=0
+! LaunchReference=uyAQv4QZT+xmabF+PKQFewo/La151sPY2mXoI9vL6Is=
+  Launcher=WI
+  LocHttpBrowserAddress=!
+! LogonTicket=7DE4D62A25D6C12F422E658E16EA1E
+  LogonTicketType=CTXS1
+  LongCommandLine=
+! NRWD=920
+  ProxyTimeout=30000
+  ProxyType=Auto
+  SFRAllowed=Off
+  SSLEnable=Off
+! ScreenPercent=0
+  SessionsharingKey=-SUAw8NwPPrQHllZXAOtp5A
+! StartIFDCD=1323712328019
+! StartSCD=1323712328019
+! TRWD=312
+  TWIMode=Off
+  Title=SAP Desktop
+  TransportDriver=TCP/IP
+--- 44,78 ----
+  SAP Desktop=
+  
+  [SAP Desktop]
+  Address=10.4.32.68:1494
+  AutologonAllowed=ON
+  BrowserProtocol=HTTPonTCP
+  CGPAddress=
+! ClearPassword=2E25965E3CCC53
+  ClientAudio=On
+  DesiredColor=8
+  DoNotUseDefaultCSL=On
+! Domain=\A1BC8A088F1DB9FC
+  EnableSSOnThruICAFile=On
+  FontSmoothingType=1
+  InitialProgram=#SAP Desktop
+  LPWD=0
+! LaunchReference=ovjZ9AJiGtSsA4SPcxRj8hNjKy6K3PdLo8D2LfVkbfc=
+  Launcher=WI
+  LocHttpBrowserAddress=!
+! LogonTicket=2E25965E3CCC53A1BC8A088F1DB9FC
+  LogonTicketType=CTXS1
+  LongCommandLine=
+! NRWD=483
+  ProxyTimeout=30000
+  ProxyType=Auto
+  SFRAllowed=Off
+  SSLEnable=Off
+! ScreenPercent=95
+  SessionsharingKey=-SUAw8NwPPrQHllZXAOtp5A
+! StartIFDCD=1329435303690
+! StartSCD=1329435303690
+! TRWD=296
+  TWIMode=Off
+  Title=SAP Desktop
+  TransportDriver=TCP/IP

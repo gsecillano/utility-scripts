@@ -1,0 +1,21 @@
+diff -r cc606937e937 src/Makefile
+--- a/src/Makefile	Thu Dec 08 18:44:51 2011 +0100
++++ b/src/Makefile	Tue Dec 13 15:34:39 2011 -0800
+@@ -351,7 +351,7 @@
+ # If the selected GUI isn't found, the GUI is disabled automatically
+ #CONF_OPT_GUI = --enable-gui=gtk2
+ #CONF_OPT_GUI = --enable-gui=gtk2 --disable-gtktest
+-#CONF_OPT_GUI = --enable-gui=gnome2
++CONF_OPT_GUI = --enable-gui=gnome2
+ #CONF_OPT_GUI = --enable-gui=gnome2 --disable-gtktest
+ #CONF_OPT_GUI = --enable-gui=motif
+ #CONF_OPT_GUI = --enable-gui=motif --with-motif-lib="-static -lXm -shared"
+@@ -423,7 +423,7 @@
+ # Uncomment this when you want to include the Ruby interface.
+ # First one for static linking, second one for loading when used.
+ # Note: you need the development package (e.g., ruby1.9.1-dev on Ubuntu).
+-#CONF_OPT_RUBY = --enable-rubyinterp
++CONF_OPT_RUBY = --enable-rubyinterp
+ #CONF_OPT_RUBY = --enable-rubyinterp=dynamic
+ #CONF_OPT_RUBY = --enable-rubyinterp --with-ruby-command=ruby1.9.1
+ 

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ikec -r SF-ALL-ADMIN -u I819885 -p $1 -a

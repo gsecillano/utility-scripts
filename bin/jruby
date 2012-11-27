@@ -2,4 +2,4 @@
 #
 #
 
-$JRUBY_HOME/bin/jruby.bash "$@"
+$JRUBY_HOME/bin/jruby.bash -J-Djruby.loadService.indexing.enabled=true "$@"
