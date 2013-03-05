@@ -1,0 +1,51 @@
+#!/bin/bash -x
+#
+
+SVNREPO_BASE=https://robleslabs.svn.cvsdude.com/ct
+
+svn_remote() {
+  echo "[svn-remote \"svn-$1\"]
+	url = https://robleslabs.svn.cvsdude.com/ct/branches/$1
+	fetch = :refs/remotes/svn-$1
+" >> .git/config
+
+}
+
+usage() {
+  echo "Usage:
+  git_svn_branch_checkout [SVN branch]
+  "
+  exit 1
+}
+
+[ -z "$1" ] && usage
+
+BRANCH="$1"
+
+[ -f .git/config ] || { echo "Must be run on Git root"; exit 1; }
+
+svn info $SVNREPO_BASE/branches/$BRANCH 2>/dev/null > /dev/null 
+if [ $? -eq 0 ]; then
+  grep "svn-remote.*$BRANCH" .git/config 2>/dev/null > /dev/null 
+  if [ $? -eq 0 ]; then
+    echo "SVN remote already exists for $BRANCH"
+  else
+    svn_remote $BRANCH
+  fi
+
+  echo -n "Fetching svn-$BRANCH..."
+
+  git svn fetch -rHEAD svn-$BRANCH 2>/dev/null >/dev/null
+  echo done
+  echo -n "Checking out new branch..."
+  git checkout -b $BRANCH svn-$BRANCH
+  echo done
+
+else
+  echo "$BRANCH is not a valid SVN branch"
+  exit 1
+fi
+
+
+
+
