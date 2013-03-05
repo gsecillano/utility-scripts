@@ -5,8 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-ZSH_THEME=$(cat ~/.zsh-theme)
+ZSH_THEME="robbyrussell"
+#ZSH_THEME=$(cat ~/.zsh-theme)
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -49,3 +49,27 @@ alias stopdebian='vmrun stop /vmware/debian/debian.vmx nogui 2>&1 > /dev/null'
 ctrepo() {
   echo 'https://robleslabs.svn.cvsdude.com/ct'
 }
+sp(){
+  export http_proxy=http://proxy:8080
+  export https_proxy=$http_proxy
+  sed -i.bak 's/#http-proxy-host/http-proxy-host/' ~/.subversion/servers
+  sed -i.bak 's/#http-proxy-port/http-proxy-port/' ~/.subversion/servers
+  sed -i.bak 's/;proxy/proxy/' ~/.gitconfig
+}
+up() {
+  unset http_proxy
+  unset https_proxy
+  sed -i.bak 's/^http-proxy-host/#http-proxy-host/' ~/.subversion/servers
+  sed -i.bak 's/^http-proxy-port/#http-proxy-port/' ~/.subversion/servers
+  sed -i.bak 's/proxy =/;proxy =/' ~/.gitconfig
+}
+
+# Mac
+alias ls='ls -G'
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+alias vpn='ikec -a -r SF-ALL-ADMIN -u i819885 -p'
+
+#ping proxy 2>& > /dev/null && sp
+ping -c 1 proxy  > /dev/null 2>&1 && sp
+
