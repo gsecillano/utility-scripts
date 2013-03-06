@@ -21,14 +21,15 @@ export RUBY_SCRIPT_PATH=~/ruby
 #  export P4DONTCHECKIN=$(p4 -P $P4TICKET changes -u i819885 -s pending -c gsecil-linux-main | grep DO-NOT-CHECK-IN | cut -d' ' -f 2)
 #fi
 
-export http_proxy=http://proxy:8080
-export https_proxy=$http_proxy
-export no_proxy=localhost
+#export http_proxy=http://proxy:8080
+#export https_proxy=$http_proxy
+#export no_proxy=localhost
 export GIT_SSL_NO_VERIFY=true
 
 #alias t='tail -f $PWD/log/development.log'
-#alias irb=~/bin/irb
 #alias rake='jruby -S rake'
 #alias gem='jruby -S gem'
-#alias T='jruby -J-Xmx1300m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner test/all_tests.rb -v --runner=fastfail'
-#alias ls='ls --color'
+alias T='jruby -J-Xmx1300m -J-XX:MaxPermSize=256m -I $RUBY_SCRIPT_PATH -rfast_fail_runner test/all_tests.rb -v --runner=fastfail'
+alias ls='ls -G'
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
