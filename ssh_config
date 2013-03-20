@@ -65,3 +65,15 @@ Host github.com
   PreferredAuthentications publickey
   Hostname ssh.github.com
   Port 443
+
+Host vanl00479590a
+  User george
+
+Host 10.100.* 10.10.* 10.4.* 10.5.* 10.8.*
+  User cubetree
+
+#Host ci.cubetree.com
+  #User root
+  #IdentityFile Documents/ec2-stage.pem
+
+

@@ -1,0 +1,19 @@
+[user]
+	name = Secillano, George
+	email = george.secillano@gmail.com
+[core]
+	excludesfile = /Users/i819885/.gitignore_global
+	attributesfile = /Users/i819885/.gitattributes
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[http]
+	;proxy = proxy:8080
+[filter "rcs-keyword"]
+	clean = perl -pe \"s/\\\\\\$HeadURL[^\\\\\\$]*\\\\\\$/\\\\\\$HeadURL\\\\\\$/\"
+	smudge = "perl -pe \"s/\\\\\\$HeadURL[^\\\\\\$]*\\\\\\$/\\\\\\$Head`git svn info | grep URL | sed \"s#/#\\\\\\\\\\/#g\"`\\\\/\\\\\\$/\""
+[init]
+  templatedir = ~/.gittemplates

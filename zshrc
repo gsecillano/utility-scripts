@@ -30,7 +30,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(cap git gem bundler rails ruby autojump zeus)
+plugins=(cap git gem bundler rails autojump zeus)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.bashrc
@@ -49,14 +49,14 @@ alias stopdebian='vmrun stop /vmware/debian/debian.vmx nogui 2>&1 > /dev/null'
 ctrepo() {
   echo 'https://robleslabs.svn.cvsdude.com/ct'
 }
-sp(){
+setproxy(){
   export http_proxy=http://proxy:8080
   export https_proxy=$http_proxy
   sed -i.bak 's/#http-proxy-host/http-proxy-host/' ~/.subversion/servers
   sed -i.bak 's/#http-proxy-port/http-proxy-port/' ~/.subversion/servers
   sed -i.bak 's/;proxy/proxy/' ~/.gitconfig
 }
-up() {
+unsetproxy() {
   unset http_proxy
   unset https_proxy
   sed -i.bak 's/^http-proxy-host/#http-proxy-host/' ~/.subversion/servers
@@ -68,8 +68,36 @@ up() {
 alias ls='ls -G'
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-alias vpn='ikec -a -r SF-ALL-ADMIN -u i819885 -p'
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+# VPN management.  Requires Shrewsoft VPN client
+vpn() {
+  case "$1" in
+    "check")
+      sudo nmap -PN -sU -p 500 12.178.105.137
+      ;;
+    "stop")
+      killall ikec > /dev/null 2>&1 || echo 'VPN client not running'
+      ;;
+    "")
+      # status
+      RETVAL=0
+      ifconfig | grep -A3 tap0: || { echo "VPN is disconnected" && RETVAL=1 } 
+      [ $RETVAL -eq 0 ]  
+      ;;
+    *)
+      vpn && { echo "VPN is active. Doing nothing" && return }
+      vpn stop
+      nohup ikec -a -r SF-ALL-ADMIN -u i819885 -p "$1" < /dev/null > ~/tmp/ikec.log 2>&1 & 
+      while true; do
+        vpn && break
+        sleep 1;
+      done
+      ;;
+  esac
+}
 
 #ping proxy 2>& > /dev/null && sp
-ping -c 1 proxy  > /dev/null 2>&1 && sp
 
+alias vi='/usr/local/bin/vim'
+alias vim='/usr/local/bin/vim'
