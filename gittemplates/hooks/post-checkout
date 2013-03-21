@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 
 sed -i '' "s#\\\$HeadURL.*\\\$#\$Head`git svn info | grep URL`\$#" config/deploy.rb
