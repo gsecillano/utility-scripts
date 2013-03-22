@@ -1,5 +1,12 @@
-#!/bin/bash
+#!/bin/bash 
 #
 
-sed -i '' "s#\\\$HeadURL.*\\\$#\$Head`git svn info | grep URL`\$#" config/deploy.rb
-
+ lock=/tmp/post-checkout.lock
+if [ -f $lock ]
+then
+  rm /tmp/post-checkout.lock
+else
+  touch $lock
+  rm config/deploy.rb
+  git checkout config/deploy.rb
+fi
