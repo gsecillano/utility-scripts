@@ -5,6 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
+#ZSH_THEME="random"
 ZSH_THEME="robbyrussell"
 #ZSH_THEME=$(cat ~/.zsh-theme)
 
@@ -30,7 +31,14 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(cap git gem bundler rails ruby autojump zeus)
+plugins=(cap git gem bundler rails rails3 ruby autojump zeus tmux rvm git-flow)
+
+# tmux plugin
+ZSH_TMUX_AUTOSTART=true
+
+DISABLE_CORRECTION="true"
+unsetopt correct
+unsetopt correctall
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.bashrc
@@ -40,23 +48,23 @@ bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 alias Z='source ~/.zshrc'
-alias gsdn="gsd -n | grep '~' | awk 'END { system(sprintf(\"git log --pretty=oneline %s..%s\n\", from, \$3)); } { if (from == \"\") from=\$2;}'"
+alias gsdn="gsd -n | grep '~' | awk 'END { if (from == \"\") { printf \"No pending SVN commits\n\"; } else { system(sprintf(\"git log --pretty=oneline %s..%s\n\", from, \$3)); } } { if (from == \"\") from=\$2;}'"
 alias -g L='2>&1 | tee'
 alias startwin='vmrun start /vmware/VM-GS/Windows7x64.vmx nogui 2>&1 > /dev/null'
 alias stopwin='vmrun stop /vmware/VM-GS/Windows7x64.vmx nogui 2>&1 > /dev/null'
-alias startdebian='vmrun start /vmware/debian/debian.vmx nogui 2>&1 > /dev/null'
-alias stopdebian='vmrun stop /vmware/debian/debian.vmx nogui 2>&1 > /dev/null'
+alias startdebian='vmrun start /vmware/debian-6.0.5/debian-6.0.5.vmx nogui 2>&1 > /dev/null'
+alias stopdebian='vmrun stop /vmware/debian-6.0.5/debian-6.0.5.vmx nogui 2>&1 > /dev/null'
 ctrepo() {
   echo 'https://robleslabs.svn.cvsdude.com/ct'
 }
-sp(){
+setproxy(){
   export http_proxy=http://proxy:8080
   export https_proxy=$http_proxy
   sed -i.bak 's/#http-proxy-host/http-proxy-host/' ~/.subversion/servers
   sed -i.bak 's/#http-proxy-port/http-proxy-port/' ~/.subversion/servers
   sed -i.bak 's/;proxy/proxy/' ~/.gitconfig
 }
-up() {
+unsetproxy() {
   unset http_proxy
   unset https_proxy
   sed -i.bak 's/^http-proxy-host/#http-proxy-host/' ~/.subversion/servers
@@ -71,5 +79,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 alias vpn='ikec -a -r SF-ALL-ADMIN -u i819885 -p'
 
 #ping proxy 2>& > /dev/null && sp
-ping -c 1 proxy  > /dev/null 2>&1 && sp
-
+#ping -c 1 proxy  > /dev/null 2>&1 && sp
+alias disp='export DISPLAY=:0'
+alias precommit='git diff --no-ext-diff -U20 --no-prefix develop | xsel --clipboard'
+alias precommitfile='git diff --no-ext-diff -U20 --no-prefix develop | tee /tmp/precommit.patch'
