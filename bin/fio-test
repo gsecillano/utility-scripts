@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+#
+
+dir=$(dirname $0)
+
+for h in $(cat /tmp/hosts)
+do
+  echo '========================'
+  echo $h
+  ssh cubetree@$h hostname
+  echo '========================'
+  scp $dir/runfio cubetree@$h:.
+  ssh cubetree@$h grep file_store /proc/mounts
+  ssh cubetree@$h mkdir -p /data/file_store/test
+  ssh cubetree@$h ./runfio /data/file_store/test 2>&1 > /dev/null
+  ssh cubetree@$h cat fio.out
+  echo '---------------------------------------'
+  echo /tmp
+  ssh cubetree@$h ./runfio /tmp 2>&1 > /dev/null
+  ssh cubetree@$h cat fio.out
+  echo '---------------------------------------'
+  echo dd throughput
+  ssh cubetree@$h 'dd if=/dev/zero of=/data/file_store/test/ddtest count=256k 2>&1'
+  echo '---------------------------------------'
+  ssh cubetree@$h rm -r /data/file_store/test
+done
+

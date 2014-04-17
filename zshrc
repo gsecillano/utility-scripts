@@ -5,6 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
+#ZSH_THEME="agnoster"
 ZSH_THEME="robbyrussell"
 #ZSH_THEME=$(cat ~/.zsh-theme)
 
@@ -30,7 +31,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(cap git gem bundler rails autojump zeus)
+plugins=(cap git gem bundler rails autojump zeus rvm gitflow)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.bashrc
@@ -52,6 +53,7 @@ ctrepo() {
 setproxy(){
   export http_proxy=http://proxy:8080
   export https_proxy=$http_proxy
+  export ftp_proxy=$http_proxy
   sed -i.bak 's/#http-proxy-host/http-proxy-host/' ~/.subversion/servers
   sed -i.bak 's/#http-proxy-port/http-proxy-port/' ~/.subversion/servers
   sed -i.bak 's/;proxy/proxy/' ~/.gitconfig
@@ -98,6 +100,67 @@ vpn() {
 }
 
 #ping proxy 2>& > /dev/null && sp
+dc() {
+  IP=$1
+  DCNUM="$(echo $IP | cut -d. -f2)"
+  case $DCNUM in
+    2)
+      GW=10.2.70.20
+      ;;
+    4)
+      GW=10.4.70.21
+      ;;
+    8)
+      GW=10.8.70.20
+      ;;
+    10)
+      GW=10.10.70.20
+      ;;
+    118)
+      GW=10.118.70.55
+      ;;
+    *)
+      echo "Unsupported DC"
+      return 1
+      ;;
+  esac
+
+  CMD="ssh $GW -t"
+  if [ ${#IP} -gt 3 ]
+  then
+    CMD="$CMD \"scp .georgerc cubetree@$IP:/tmp/.; ssh -t cubetree@$IP bash --init-file /tmp/.georgerc\""
+  else
+    CMD="$CMD bash --init-file .georgerc"
+  fi
+  bash -c "$CMD"
+}
+
+nodes() {
+  grep -i "$1" config/deploy/instances/$2.rb | grep -o "10\..*" | sed -e "s/['\",]//g" | sort | uniq
+}
+
+ctapp() {
+  nodes "ctapp" $1
+}
+
+ctutil() {
+  nodes "ctutil\|ctcron" $1
+}
+
+s() {
+  HOST=$1
+  ssh -t cubetree@$HOST.sapjam.com bash --init-file .georgerc
+}
 
 alias vi='/usr/local/bin/vim'
 alias vim='/usr/local/bin/vim'
+alias log2='dc 10.2.72.11'
+alias log4='dc 10.4.72.10'
+alias sdlog4='dc 10.4.72.90'
+alias log8='dc 10.8.72.15'
+alias sdlog8='dc 10.8.70.41'
+alias log10='dc 10.10.72.11'
+alias log12='dc 10.118.70.53'
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

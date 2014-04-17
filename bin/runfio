@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+
+sudo apt-get -y -q install fio 2>&1 > /dev/null
+cat - <<EOF > /tmp/random.fio
+; random read of 128mb of data
+
+[random-read]
+;numjobs=5
+rw=randread
+size=128m
+;directory=/data/file_store/test
+;directory=/mnt/test
+;directory=/tmp
+directory=$1
+
+EOF
+fio /tmp/random.fio 2>&1 | tee fio.out
+sudo apt-get -y -q purge fio libaio1 2>&1 > /dev/null
+
