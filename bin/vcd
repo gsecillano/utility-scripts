@@ -1,0 +1,2 @@
+#!/bin/bash -e
+ curl -s  -k -H 'Accept:application/*+xml;version=1.5' -H 'x-vcloud-authorization: p7Nm3LMc9eA2OFsJRVVyGJPck91aZ09FjQAt0Fhsjig=' "$@"

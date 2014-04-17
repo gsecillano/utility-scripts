@@ -31,7 +31,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(cap git gem bundler rails rails3 ruby autojump zeus tmux rvm git-flow)
+plugins=(rails cap git gem bundler ruby autojump zeus tmux rvm git-flow)
 
 # tmux plugin
 ZSH_TMUX_AUTOSTART=true
@@ -83,3 +83,17 @@ alias vpn='ikec -a -r SF-ALL-ADMIN -u i819885 -p'
 alias disp='export DISPLAY=:0'
 alias precommit='git diff --no-ext-diff -U20 --no-prefix develop | xsel --clipboard'
 alias precommitfile='git diff --no-ext-diff -U20 --no-prefix develop | tee /tmp/precommit.patch'
+alias dbdev='mysql -uroot ct_development'
+
+s() {
+  HOST=$1
+  ssh -t cubetree@$HOST.sapjam.com bash --init-file .georgerc
+}
+
+alias stage='s stage'
+alias int1='s integration1'
+alias int2='s integration2'
+alias int3='s integration3'
+alias int4='s integration4'
+alias diffu='export CDIFF_UNIFIED=true'
+alias diffs='unset CDIFF_UNIFIED'

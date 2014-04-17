@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+if [ -n "$CDIFF_UNIFIED" ]
+then
+  SIDE_BY_SIDE=""
+else
+  SIDE_BY_SIDE="-s"
+fi
+#[ $# -eq 7 ] && cdiff $SIDE_BY_SIDE -w 120 "$2" "$5"
+[ $# -eq 7 ] && cdiff -c always $SIDE_BY_SIDE -w 120 "$2" "$5"
