@@ -1,67 +1,25 @@
 StrictHostKeyChecking no
 
-Host boe-slave
-   User root
-
-Host boe-cms
-   User root
-
-Host thewhohar
-   User root
-
-Host vanpgvmlnx*
-   User root
-
-Host cheetah
-   User root
-
-Host slnx*
-   User root
-
-Host plnx*
-   User root
-
-Host sandbox
-   User cstar
-
-Host prodcms
-   User boe
-   RemoteForward 1971 perforceserver1:1971
-
-Host prod*
-   User root
-
-Host stg*
-   User root
-
-Host staging-constellation
-   User root
-
-Host logs
-   User flui
-
-
-Host cstarservices
-   User root
-
-Host roxygen
-   User root
-
-Host approxy1
-   User root
-   Port 8888
-
-Host lbroxy1
-   User root
-   Port 8889
-
-Host 172.31.254.*
-  ProxyCommand ssh root@10.101.202.90 nc %h %p
-  Ciphers arcfour
-  ClearAllForwardings yes
-
 Host github.com
   ProxyCommand /usr/bin/corkscrew bluecoat-proxy 8080 %h %p
   PreferredAuthentications publickey
   Hostname ssh.github.com
   Port 443
+
+Host ec2-54-214-14-14.us-west-2.compute.amazonaws.com
+  User ec2-user
+  ProxyCommand corkscrew proxy.van.sap.corp 8080 %h %p
+  Port 443 
+  IdentityFile ~/.ssh/ec2_user 
+
+Host ec2-54-196-95-49.compute-1.amazonaws.com
+  IdentityFile ~/Documents/ec2-stage.pem
+
+Host *.amazonaws.com *.successfactors.com *.cubetree.com 46.137.157.33 107.21.13.191  107.21.13.187 107.21.12.213 54.236.134.49 *.sapjam.com
+  User cubetree
+  ProxyCommand ssh ec2-54-214-14-14.us-west-2.compute.amazonaws.com nc %h %p
+
+Host ci.cubetree.com
+  User root
+  IdentityFile Documents/ec2-stage.pem
+
