@@ -6,6 +6,57 @@ Host github.com
   Hostname ssh.github.com
   Port 443
 
+# Jumphost tunnel
+
+Host 10.2.30.70 10.4.196.175 10.8.196.50 10.10.198.30 10.2.70.20
+  ProxyCommand ssh vpn netcat %h %p
+
+Host vpn
+  User root
+  Hostname 10.160.213.28 
+
+# DC2 jumphost
+Host 10.2.30.70
+  User I819885
+
+# DC4 jumphost
+Host 10.4.196.175
+  User I819885
+
+# DC8 jumphost
+Host 10.8.196.50
+  User I819885
+
+# DC10 jumphost
+Host 10.10.198.30
+  User I819885
+
+# DC2 devops host
+Host 10.2.70.20
+  User devops
+  #ProxyCommand ssh 10.2.30.70 netcat %h %p
+  ProxyCommand ssh 10.4.196.175 netcat %h %p
+
+# DC4 devops host
+Host 10.4.70.21
+  User devops
+  ProxyCommand ssh 10.4.196.175 netcat %h %p
+
+# DC8 devops host
+Host 10.8.70.20
+  User devops
+  ProxyCommand ssh 10.8.196.50 netcat %h %p
+
+# DC10 devops host
+Host 10.10.70.20
+  User devops
+  ProxyCommand ssh 10.10.198.30 netcat %h %p
+
+# DC12 devops host
+Host 10.118.70.55
+  User devops
+  ProxyCommand ssh 10.4.70.21 netcat %h %p
+
 Host ec2-54-214-14-14.us-west-2.compute.amazonaws.com
   User ec2-user
   ProxyCommand corkscrew proxy.van.sap.corp 8080 %h %p
