@@ -17,19 +17,19 @@ Host vpn
 
 # DC2 jumphost
 Host 10.2.30.70
-  User I819885
+  User i819885
 
 # DC4 jumphost
 Host 10.4.196.175
-  User I819885
+  User i819885
 
 # DC8 jumphost
 Host 10.8.196.50
-  User I819885
+  User i819885
 
 # DC10 jumphost
 Host 10.10.198.30
-  User I819885
+  User i819885
 
 # DC2 devops host
 Host 10.2.70.20
