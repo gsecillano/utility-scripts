@@ -1,3 +1,4 @@
+GSSAPIAuthentication no
 StrictHostKeyChecking no
 
 Host github.com
