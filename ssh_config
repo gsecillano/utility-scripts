@@ -9,7 +9,7 @@ Host github.com
 
 # Jumphost tunnel
 
-Host 10.2.30.70 10.4.196.175 10.8.196.50 10.10.198.30 10.2.70.20
+Host 10.2.30.70 10.4.196.175 10.8.196.50 10.10.198.30 
   ProxyCommand ssh vpn netcat %h %p
 
 Host vpn
@@ -64,7 +64,7 @@ Host ec2-54-214-14-14.us-west-2.compute.amazonaws.com
   Port 443 
   IdentityFile ~/.ssh/ec2_user 
 
-Host ec2-54-196-95-49.compute-1.amazonaws.com
+Host ec2-54-196-95-49.compute-1.amazonaws.com integration2.sapjam.com
   IdentityFile ~/Documents/ec2-stage.pem
 
 Host *.amazonaws.com *.successfactors.com *.cubetree.com 46.137.157.33 107.21.13.191  107.21.13.187 107.21.12.213 54.236.134.49 *.sapjam.com
@@ -75,3 +75,5 @@ Host ci.cubetree.com
   User root
   IdentityFile Documents/ec2-stage.pem
 
+Host *.mo.sap.corp
+  User i819885

@@ -11,10 +11,10 @@
   <static>
     <duration>90.0</duration>
     <!--<file>/home/george/Pictures/backgrounds/katkam/katkam.jpg</file>-->
-    <file>/home/george/Pictures/backgrounds/flickr/flickr_image0</file>
+    <file>/home/george/Pictures/backgrounds/bg_image</file>
   </static>
   <static>
     <duration>90.0</duration>
-    <file>/home/george/Pictures/backgrounds/flickr/flickr_image1</file>
+    <file>/home/george/Pictures/backgrounds/bg_image1</file>
   </static>
 </background>
